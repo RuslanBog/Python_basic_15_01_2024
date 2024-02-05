@@ -1,5 +1,5 @@
-running = True
-while running:
+continue_calc = True
+while continue_calc:
 
     number_1 = float(input("Enter first number: "))
     number_2 = float(input("Enter second number: "))
@@ -21,8 +21,8 @@ while running:
 
     ask_question = input("Do you want to continue (y, n)?: ")
     if ask_question == "y":
-        running = True
+        continue_calc = True
     else:
-        running = False
+        continue_calc = False
 
 
