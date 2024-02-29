@@ -13,8 +13,6 @@ def is_even(digit):
         res = False
 
     return res
-# digit = 2
-# print(is_even(2))
 
 assert is_even(2) == True, 'Test1'
 assert is_even(5) == False, 'Test2'
