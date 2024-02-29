@@ -1,3 +1,4 @@
+
 class Item:
     def __init__(self, name, price, description, dimensions):
         self.name = name
@@ -44,6 +45,7 @@ cart = Purchase(buyer)
 cart.add_item(lemon, 4)
 cart.add_item(apple, 20)
 print(cart)
+
 """
 User: Ivan Ivanov
 Items:
