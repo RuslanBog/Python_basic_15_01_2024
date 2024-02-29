@@ -1,43 +1,66 @@
-class Product:
-    def __init__(self, price, description, dimensions):
+class Item:
+    def __init__(self, name, price, description, dimensions):
+        self.name = name
         self.price = price
         self.description = description
         self.dimensions = dimensions
 
     def __str__(self):
-        return f"{self.description} - ${self.price}"
+        return f"{self.name}, price: {self.price}"
 
-class Buyer:
-    def __init__(self, nickname, name, father_name, mobile_phone):
-        self.nickname = nickname
+class User:
+    def __init__(self, name, surname, numberphone):
         self.name = name
-        self.father_name = father_name
-        self.mobile_phone = mobile_phone
+        self.surname = surname
+        self.numberphone = numberphone
 
     def __str__(self):
-        return f"{self.name} {self.father_name} ({self.nickname}) - {self.mobile_phone}"
+        return f"{self.name} {self.surname}"
 
-class Transaction:
-    def __init__(self, buyer, products):
-        self.buyer = buyer
-        self.products = products
+class Purchase:
+    def __init__(self, user):
+        self.products = {}
+        self.user = user
+        self.total = 0
 
-    def calculate_total(self):
-        total = sum(product.price for product in self.products)
-        return total
+    def add_item(self, item, cnt):
+        self.products[item] = cnt
 
     def __str__(self):
-        product_list = "\n".join(str(product) for product in self.products)
-        total_value = self.calculate_total()
-        return f"Transaction details:\nBuyer: {self.buyer}\nProducts:\n{product_list}\nTotal Value: ${total_value}"
+        items_str = "\n".join([f"{item.name}: {count} pcs." for item, count in self.products.items()])
+        return f"User: {self.user}\nItems:\n{items_str}"
 
-# Test the classes
-product1 = Product(29.99, "Smartphone", "5.5 x 2.8 x 0.3 inches")
-product2 = Product(499.99, "Laptop", "13.3 x 9.1 x 0.7 inches")
+    def get_total(self):
+        return sum(item.price * count for item, count in self.products.items())
 
-buyer = Buyer("user123", "John", "Doe", "123-456-7890")
+lemon = Item('lemon', 5, "yellow", "small")
+apple = Item('apple', 2, "red", "middle")
+print(lemon)  # lemon, price: 5
 
-transaction = Transaction(buyer, [product1, product2])
+buyer = User("Ivan", "Ivanov", "02628162")
+print(buyer)  # Ivan Ivanov
 
-# Display information about the transaction
-print(transaction)
+cart = Purchase(buyer)
+cart.add_item(lemon, 4)
+cart.add_item(apple, 20)
+print(cart)
+"""
+User: Ivan Ivanov
+Items:
+lemon: 4 pcs.
+apple: 20 pcs.
+"""
+
+assert isinstance(cart.user, User) is True, 'Екземпляр класу User'
+assert cart.get_total() == 60, "Всього 60"
+assert cart.get_total() == 60, 'Повинно залишатися 60!'
+cart.add_item(apple, 10)
+print(cart)
+"""
+User: Ivan Ivanov
+Items:
+lemon: 4 pcs.
+apple: 10 pcs.
+"""
+
+assert cart.get_total() == 40
