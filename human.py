@@ -1,4 +1,3 @@
-# human.py
 
 class Human:
 

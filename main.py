@@ -1,4 +1,4 @@
-# main.py
+
 from student import Student
 from group import Group
 
@@ -8,8 +8,8 @@ gr = Group('PD1')
 gr.add_student(st1)
 gr.add_student(st2)
 print(gr)
-assert gr.find_student('Jobs') == st1
+assert gr.find_student('Jobs') == st1  # 'Steve Jobs'
 assert gr.find_student('Jobs2') is None
 
 gr.delete_student('Taylor')
-print(gr)
+print(gr)  # Only one student

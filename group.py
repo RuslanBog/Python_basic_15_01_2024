@@ -1,4 +1,4 @@
-# group.py
+
 from student import Student
 
 class Group:
