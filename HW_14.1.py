@@ -1,9 +1,6 @@
-class TooManyStudentsError(Exception):
-    def __init__(self, message="The maximum number of students in the group is exceeded (max: 10)."):
-        self.message = message
-        super().__init__(self.message)
 
 class Human:
+
     def __init__(self, gender, age, first_name, last_name):
         self.gender = gender
         self.age = age
@@ -11,31 +8,34 @@ class Human:
         self.last_name = last_name
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}, {self.age} years old, {self.gender}'
+        return f'{self.first_name} {self.last_name}, Gender: {self.gender}, Age: {self.age}'
 
 class Student(Human):
+
     def __init__(self, gender, age, first_name, last_name, record_book):
         super().__init__(gender, age, first_name, last_name)
         self.record_book = record_book
 
     def __str__(self):
-        return f'{super().__str__()}, Record Book: {self.record_book}'
+        return super().__str__() + f', Record Book: {self.record_book}'
 
 class Group:
+    MAX_STUDENTS = 10
+
     def __init__(self, number):
         self.number = number
         self.group = set()
 
     def add_student(self, student):
-        if len(self.group) < 10:
+        if len(self.group) < self.MAX_STUDENTS:
             self.group.add(student)
         else:
-            raise TooManyStudentsError()
+            raise ValueError('Досягнуто максимальну кількість студентів у групі.')
 
     def delete_student(self, last_name):
-        student = self.find_student(last_name)
-        if student:
-            self.group.remove(student)
+        student_to_remove = self.find_student(last_name)
+        if student_to_remove is not None:
+            self.group.remove(student_to_remove)
 
     def find_student(self, last_name):
         for student in self.group:
@@ -47,18 +47,17 @@ class Group:
         all_students = '\n'.join(str(student) for student in self.group)
         return f'Number: {self.number}\n{all_students}'
 
-# Перевірка
 
 st1 = Student('Male', 30, 'Steve', 'Jobs', 'AN142')
 st2 = Student('Female', 25, 'Liza', 'Taylor', 'AN145')
 gr = Group('PD1')
 
-for _ in range(10):
-    gr.add_student(st1)
+for i in range(10):
+    gr.add_student(Student(f'Male{i}', 20+i, f'First{i}', f'Last{i}', f'AN{i}'))
 
 try:
-    gr.add_student(st2)  # TooManyStudentsError
-except TooManyStudentsError as e:
+    gr.add_student(st1)
+except ValueError as e:
     print(e)
 
 print(gr)
